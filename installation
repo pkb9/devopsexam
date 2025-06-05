@@ -1,0 +1,96 @@
+to install java:
+sudo apt install openjdk-11-jdk
+
+to install git:
+sudo apt install git
+git config --global user.name "github username"
+git congif --global user.email "github mail "
+
+to install maven:
+sudo apt install maven
+mvn --version
+
+to install gradle:
+sudo apt install gradle
+gradle --version
+
+Goto AppStore and Install Jenkins
+Continuous Integration with Jenkins: Setting up a CI pipeline ,Integrating Jenkins with Maven/Gradle, Running automated Builds and tests
+
+Before we start integrating Jenkins with either maven/gradle , do the following settings: 
+
+1) Generate a Token: 
+	a) Goto github account , click settings, on the left hand side click on Developer Settings
+	b) click on Personal Access token,and then Token(classic)
+	c) Now on right hand side click on Generate new token, click on Generate new token(classic)
+	d) authenticate using github password
+  	   Note: "Write valid name which is visible as ID to differentiate id between their purpose 'mytoken'/JenkinsIntegration
+	e) Expiration: select No expiration  
+	f) Under select scopes- check box repo, workflow
+	g) Generate token 
+	e) Copy and save it somewhere as it is required for integration
+ 
+2) Goto Jenkins: localhost:8080
+   We should add 4 plugins + 1 credentials (only once and applies to all maven/gradle integration)
+   i) 	github integration
+   ii) 	maven integration
+   iii) gradle integration
+   iv) 	pipeline:stage view
+    v)  Add credential - to give access to github
+    
+    Here are the steps:
+    
+    Steps to install plugins: 
+    	- Goto Manage jenkins -> plugins -> available plugins
+    	- Search and install following plugins:
+	    	1) Github integration Plugin -- Install
+	    	2) Maven Integration Plugin -- Install
+	    	3) Pipeline stage View Plugin -- Install
+	    	4) Gradle ( it is installed by default , do check in installed plugins)
+	    	
+    Steps to add credentials:
+     	- Goto Manage jenkins, click on credentials
+     	- click and select the domain global , and then Add Credentials
+     	- kind: select - username with password
+     	- scope: leave as it is
+     	- username: Github username , check box Treat username as secret
+     	- password: Github password
+     	- ID: Give any name
+     	- Description: Github credentials 
+     	- Create 
+     	
+3) Tools Configuration:
+   Goto Manage jenkins, and then tools
+	- Default settigs Provider
+		use default maven settings - as it is
+	- Default global settings provider
+		use default maven global settings
+	- JDK Installation
+		Add JDK
+		Name: JDK
+		JAVA_HOME:/usr/lib/jvm/java-11-openjdk-amd64
+		( To get this path: go to files -> other locations -> computer -> usr -> lib -> jvm -> java-11-openjdk-amd64.
+		  Now click on three dots , open in Terminal , and copy the path and paste it in JAVA_HOME )
+	- Git Installation
+		Name: Default
+		Path to Git executable: /usr/bin/git 
+		( To get this path: Goto terminal , type the command - which git, and copy- paste )
+	- Gradle Installation
+		Add Gradle
+		Name: Gradle
+		GRADLE_HOME:/usr/bin/gradle
+		( To get this path: Goto terminal , type the command - which gradle, and copy- paste )
+	-Maven Installation
+		Add Maven
+		Name: maven
+		MAVEN_HOME:/usr/bin/mvn
+		( To get this path: Goto terminal , type the command - which mvn, and copy- paste )
+		
+ 	NOTE: uncheck Install automatically.
+ 	      Ignore the warnings
+ 	
+  Now Apply and Save.
+
+to install ansible:
+sudo apt install ansible
+ansible --version
