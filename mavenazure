@@ -1,0 +1,41 @@
+Type "portal.azure.com" in the browser
+Login to your Microsoft Azure account 
+Search for Azure Devops Organization in the dashboard and click on my azure devops organization
+Create an organization with any name(select the organization if already created)
+Create project with any name and select private and continue
+
+Go to Pipeline --> click on create pipeline 
+In connect choose GitHub (YAML)
+In select choose Maven Repo
+In configure choose Maven
+In review paste the yaml code(with proper indentation)
+#code
+trigger:
+- master
+
+pool:
+  name: Default
+
+steps:
+- script: echo Myfirst Azure Pipeline for maven project
+  displayName: 'Run a one-line script'
+- script: mvn clean install
+  displayName: 'Build with maven'
+- script: java -jar target/Maven-Jenkin-Pipeline-1.0-SNAPSHOT.jar
+  displayName: 'Running jar'
+
+
+Save and Run(Permit aftr u run,the job will be queued)
+
+If agent is not created:
+Go to Project settings --> Agent Pools --> New Agent --> Download for linux (x64 one) --> Execute the commands below them in the terminal
+in ./config.sh u will have to paste the azure organization url along with project name and enter the authentication type as PAT
+to create PAT  click on user settings(on the rignt top corner) --> Personal Access Token --> new token(Give a name, select organization, expiration 30 days and give full access) --> Create
+
+Go to terminal 
+cd myagent
+ls
+./config.sh
+./run.sh
+
+once u run ./run.sh in the terminal the azure job is executed.
