@@ -1,0 +1,62 @@
+sudo apt install gradle
+gradle --version
+
+mkdir GradleJenkins
+cd GradleJenkins
+
+gradle init --type java-application
+
+Create a github repository named "GradleJenkins"
+
+gedit Jenkinsfile
+//Code inside Jenkinsfile
+pipeline {
+    agent any 
+    tools {
+        gradle 'Gradle'
+        jdk 'JDK'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'master', url: 'https://github.com/yenrimedia/GradleJenkins.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'gradle build'
+            }
+        }
+       stage('Test') {
+           steps {
+               sh 'gradle test' 
+           }
+        }     
+        stage('Run Application') {
+            steps {
+                sh 'gradle run'
+            }
+        }   
+    }
+    post {
+        success {
+            echo 'Build and deployment successful!'
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}
+
+
+gradle build
+gradle run
+
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/yenrimedia/GradleJenkins.git
+git remote set-url origin https://"your-token"@github.com/yenrimedia/GradleJenkins.git
+git push -u origin master
+
+Create a jenkins pipeline named "GradleJenkins" and build it
